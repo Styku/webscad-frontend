@@ -16,9 +16,10 @@
         <div id="inputs">
             <div v-for="item in params">
                 <label>{{ item.name }}</label>
-                <input v-if="item.type == 'string'" type="text">
-                <input v-else type="number">
+                <input v-if="item.type == 'string'" type="text" v-model="item.value">
+                <input v-else type="number" v-model="item.value">
             </div>
+            <button @click.prevent="sendStlRequest()">Get STL</button>
         </div>
     </main>
     <script src="app.js"></script>
