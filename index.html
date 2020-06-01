@@ -12,14 +12,23 @@
     
 </head>
 <body>
-    <main>
-        <div id="inputs">
-            <div v-for="item in params">
-                <label>{{ item.name }}</label>
-                <input v-if="item.type == 'string'" type="text" v-model="item.value">
-                <input v-else type="number" v-model="item.value">
+    <main id="app">
+        <div class="grid-inputs">
+            <div>
+                <div v-for="item in params">
+                    <label class="w3-text-blue">{{ item.name }}</label>
+                    <input v-if="item.type == 'string'" type="text" v-model="item.value" class="w3-input w3-border">
+                    <input v-else type="number" v-model="item.value" class="w3-input w3-border">
+                    <p>{{ item.description }}</p>
+                </div>
             </div>
-            <button @click.prevent="sendStlRequest()">Get STL</button>
+            <div>
+                <img v-bind:src="preview" /> 
+            </div>
+            <div class="controls">
+                <button @click.prevent="sendPreviewRequest()" class="w3-button w3-blue">Preview</button>
+                <button @click.prevent="sendStlRequest()" class="w3-button w3-green">Render</button>
+            </div>
         </div>
     </main>
     <script src="app.js"></script>

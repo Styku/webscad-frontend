@@ -1,0 +1,21 @@
+main {
+    width: 70vw; 
+    margin: 5vh auto;
+}
+
+.grid-inputs
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-inputs img
+{
+    width: 100%;
+}
+
+.controls
+{
+    text-align: right;
+    grid-column: 1 / 3;
+}
