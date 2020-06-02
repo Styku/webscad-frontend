@@ -13,21 +13,31 @@
 </head>
 <body>
     <main id="app">
-        <div class="grid-inputs">
-            <div>
-                <div v-for="item in params">
-                    <label class="w3-text-blue">{{ item.name }}</label>
-                    <input v-if="item.type == 'string'" type="text" v-model="item.value" class="w3-input w3-border">
-                    <input v-else type="number" v-model="item.value" class="w3-input w3-border">
-                    <p>{{ item.description }}</p>
+        <div class="grid-main">
+            <div class="grid-scripts">
+                <div v-for="item in scripts" @click.prevent="sendScriptRequest(item.script)" class="w3-card w3-hover-shadow" >
+                    <img v-bind:src="item.image" class="thumbnail"> 
+                    <div class="w3-container w3-blue w3-center">
+                        <h5>{{ item.script }}</h5>
+                    </div>
                 </div>
             </div>
-            <div>
-                <img v-bind:src="preview" /> 
-            </div>
-            <div class="controls">
-                <button @click.prevent="sendPreviewRequest()" class="w3-button w3-blue">Preview</button>
-                <button @click.prevent="sendStlRequest()" class="w3-button w3-green">Render</button>
+            <div class="grid-inputs">
+                <div>
+                    <div v-for="item in params">
+                        <label class="w3-text-blue">{{ item.name }}</label>
+                        <input v-if="item.type == 'string'" type="text" v-model="item.value" class="w3-input w3-border">
+                        <input v-else type="number" v-model="item.value" class="w3-input w3-border">
+                        <p>{{ item.description }}</p>
+                    </div>
+                </div>
+                <div>
+                    <img v-bind:src="preview" /> 
+                </div>
+                <div class="controls">
+                    <button @click.prevent="sendPreviewRequest()" class="w3-button w3-blue">Preview</button>
+                    <button @click.prevent="sendStlRequest()" class="w3-button w3-green">Render</button>
+                </div>
             </div>
         </div>
     </main>

@@ -8,12 +8,14 @@ new Vue({
     el: '#app',
     data: {
         search_string: "",
+        scripts: [],
+        loaded_script: 'keychain',
         params: [],
         preview: ""
     },
     methods: {
         sendStlRequest() {
-            postData = {script: 'keychain'};
+            postData = {script: this.loaded_script};
             this.params.forEach(param => {
                 postData[param.var_name] = param.value;
             });
@@ -29,7 +31,7 @@ new Vue({
                 });
         },
         sendPreviewRequest() {
-            postData = {script: 'keychain'};
+            postData = {script: this.loaded_script};
             this.params.forEach(param => {
                 postData[param.var_name] = param.value;
             });
@@ -43,13 +45,21 @@ new Vue({
                     this.preview = imageUrl;
                     console.log(this.preview);
                 });
+        },
+        sendScriptRequest(script) {
+            this.$http.get('http://127.0.0.1:5000/script/' + script)
+            .then(res => {
+                this.params = res.body.params;
+                this.loaded_script = script;
+                this.sendPreviewRequest();
+            })
         }
     },
     created: function() {
-        this.$http.get('http://127.0.0.1:5000/script/keychain')
+        this.$http.get('http://127.0.0.1:5000/script')
             .then(res => {
-                this.params = res.body.params;
-                console.log(this.params);
+                this.scripts = res.body;
+                this.sendScriptRequest('keychain');
             })
     }
 });

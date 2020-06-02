@@ -1,12 +1,30 @@
 main {
-    width: 70vw; 
-    margin: 5vh auto;
+    margin: 0px; 
+    padding: 0px;
 }
 
 .grid-inputs
 {
+    padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content;
+    grid-gap: 1em;
+}
+
+.grid-scripts
+{
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content;
+    grid-gap: 1em;
+}
+
+.grid-main
+{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
 }
 
 .grid-inputs img
@@ -18,4 +36,9 @@ main {
 {
     text-align: right;
     grid-column: 1 / 3;
+}
+
+.thumbnail
+{
+    width: 10vw;
 }
