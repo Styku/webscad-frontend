@@ -21,7 +21,7 @@ new Vue({
                 postData[param.var_name] = param.value;
             });
             this.$http
-                .post("http://127.0.0.1:5000/stl", postData, {responseType: 'arraybuffer'})
+                .post("http://3dprint.styczen.site:5000/stl", postData, {responseType: 'arraybuffer'})
                 .then(response => {
                     var headers = response.headers;
                     var blob = new Blob([response.data],{type:headers['content-type']});
@@ -39,7 +39,7 @@ new Vue({
                 postData[param.var_name] = param.value;
             });
             this.$http
-                .post("http://127.0.0.1:5000/render", postData, {responseType: 'blob'})
+                .post("http://3dprint.styczen.site:5000/render", postData, {responseType: 'blob'})
                 .then(response => {
                     var headers = response.headers;
                     var blob = new Blob([response.data],{type:'image/png'});
@@ -50,7 +50,7 @@ new Vue({
                 });
         },
         sendScriptRequest(script) {
-            this.$http.get('http://127.0.0.1:5000/script/' + script)
+            this.$http.get('http://3dprint.styczen.site:5000/script/' + script)
             .then(res => {
                 this.params = res.body.params;
                 this.loaded_script = script;
@@ -59,7 +59,7 @@ new Vue({
         }
     },
     created: function() {
-        this.$http.get('http://127.0.0.1:5000/script')
+        this.$http.get('http://3dprint.styczen.site:5000/script')
             .then(res => {
                 this.scripts = res.body;
                 this.sendScriptRequest('keychain');
