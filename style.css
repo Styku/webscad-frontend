@@ -1,13 +1,15 @@
 main {
     margin: 0px; 
     padding: 0px;
+    width: 100%;
+    height: 100%;
 }
 
 .grid-inputs
 {
     padding: 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     grid-auto-rows: min-content;
     grid-gap: 1em;
 }
@@ -25,17 +27,32 @@ main {
 {
     display: grid;
     grid-template-columns: 1fr 3fr;
-}
-
-.grid-inputs img
-{
     width: 100%;
+    height: 100%;
 }
 
-.controls
+.grid-inputs .preview
+{
+    text-align: center;
+}
+
+.preview-container
+{
+    text-align: center;
+}
+
+.preview-container-loading
+{
+    background-image: url('img/preloader.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+menu
 {
     text-align: right;
-    grid-column: 1 / 3;
+    padding: 10px;
+    margin: 0;
 }
 
 .thumbnail

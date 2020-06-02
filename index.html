@@ -5,6 +5,7 @@
     <title>3D print</title>
     
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css">
     <link rel="stylesheet" href="style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -14,29 +15,31 @@
 <body>
     <main id="app">
         <div class="grid-main">
-            <div class="grid-scripts">
-                <div v-for="item in scripts" @click.prevent="sendScriptRequest(item.script)" class="w3-card w3-hover-shadow" >
+            <div class="grid-scripts w3-theme-l4">
+                <div v-for="item in scripts" @click.prevent="sendScriptRequest(item.script)" class="w3-card w3-hover-shadow w3-white w3-center">
                     <img v-bind:src="item.image" class="thumbnail"> 
-                    <div class="w3-container w3-blue w3-center">
+                    <div v-bind:class="{'w3-container': true, 'w3-theme': item.script != loaded_script, 'w3-theme-d4': item.script == loaded_script}">
                         <h5>{{ item.script }}</h5>
                     </div>
                 </div>
             </div>
-            <div class="grid-inputs">
-                <div>
-                    <div v-for="item in params">
-                        <label class="w3-text-blue">{{ item.name }}</label>
-                        <input v-if="item.type == 'string'" type="text" v-model="item.value" class="w3-input w3-border">
-                        <input v-else type="number" v-model="item.value" class="w3-input w3-border">
-                        <p>{{ item.description }}</p>
-                    </div>
-                </div>
-                <div>
-                    <img v-bind:src="preview" /> 
-                </div>
-                <div class="controls">
+            <div>
+                <menu class="w3-theme-d4">
                     <button @click.prevent="sendPreviewRequest()" class="w3-button w3-blue">Preview</button>
                     <button @click.prevent="sendStlRequest()" class="w3-button w3-green">Render</button>
+                </menu>
+                <div class="grid-inputs">
+                    <div>
+                        <div v-for="item in params">
+                            <label class="w3-text-blue">{{ item.name }}</label>
+                            <input v-if="item.type == 'string'" type="text" v-model="item.value" class="w3-input w3-border">
+                            <input v-else type="number" v-model="item.value" class="w3-input w3-border">
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </div>
+                    <div v-bind:class="{'preview-container-loading': preview_loading, 'preview-container': !preview_loading}">
+                        <img v-bind:src="preview" v-if="!preview_loading"> 
+                    </div>
                 </div>
             </div>
         </div>

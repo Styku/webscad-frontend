@@ -11,7 +11,8 @@ new Vue({
         scripts: [],
         loaded_script: 'keychain',
         params: [],
-        preview: ""
+        preview: "/img/preloader.gif",
+        preview_loading: true
     },
     methods: {
         sendStlRequest() {
@@ -31,6 +32,8 @@ new Vue({
                 });
         },
         sendPreviewRequest() {
+            this.preview_loading = true;
+            this.preview = "/img/preloader.gif";
             postData = {script: this.loaded_script};
             this.params.forEach(param => {
                 postData[param.var_name] = param.value;
@@ -42,8 +45,8 @@ new Vue({
                     var blob = new Blob([response.data],{type:'image/png'});
                     var urlCreator = window.URL || window.webkitURL;
                     var imageUrl = urlCreator.createObjectURL(blob);
+                    this.preview_loading = false;
                     this.preview = imageUrl;
-                    console.log(this.preview);
                 });
         },
         sendScriptRequest(script) {
