@@ -15,11 +15,16 @@
 <body>
     <main id="app">
         <div class="grid-main">
-            <div class="grid-scripts w3-theme-l4">
-                <div v-for="item in scripts" @click.prevent="sendScriptRequest(item.script)" class="w3-card w3-hover-shadow w3-white w3-center">
-                    <img v-bind:src="item.image" class="thumbnail"> 
-                    <div v-bind:class="{'w3-container': true, 'w3-theme': item.script != loaded_script, 'w3-theme-d4': item.script == loaded_script}">
-                        <h5>{{ item.script }}</h5>
+            <div class="left-panel">
+                <menu class="w3-theme-d4">
+                    <input v-model="script_filter" class="w3-input w3-border">
+                </menu>
+                <div class="grid-scripts w3-theme-l4">
+                    <div v-for="item in filtered_scripts" @click.prevent="sendScriptRequest(item.script)" class="w3-card w3-hover-shadow w3-white w3-center">
+                        <div v-bind:class="{'w3-container': true, 'w3-theme': item.script != loaded_script, 'w3-theme-d4': item.script == loaded_script}">
+                            <h5>{{ item.script }}</h5>
+                        </div>
+                        <img v-bind:src="item.image" class="thumbnail"> 
                     </div>
                 </div>
             </div>
@@ -32,8 +37,15 @@
                     <div>
                         <div v-for="item in params">
                             <label class="w3-text-blue">{{ item.name }}</label>
-                            <input v-if="item.type == 'string'" type="text" v-model="item.value" class="w3-input w3-border">
-                            <input v-else type="number" v-model="item.value" class="w3-input w3-border">
+                            <template v-if="item.allowed">
+                                <select v-model="item.value" class="w3-input w3-border">
+                                    <option v-for="option in item.allowed" v-bind:value="option">{{ option }}</option>
+                                </select>
+                            </template>
+                            <template v-else>
+                                <input v-if="item.type == 'string'" type="text" v-model="item.value" class="w3-input w3-border">
+                                <input v-else type="number" v-model="item.value" class="w3-input w3-border">
+                            </template>
                             <p>{{ item.description }}</p>
                         </div>
                     </div>

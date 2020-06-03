@@ -1,13 +1,10 @@
-// Vue.directive('focus', {
-//     inserted: function (el) {
-//         el.focus()
-//     }
-// })
+const HOST = "3dprint.styczen.site"
+const BACKEND_URL = "http://" + HOST + ":5000";
 
 new Vue({
     el: '#app',
     data: {
-        search_string: "",
+        script_filter: "",
         scripts: [],
         loaded_script: 'keychain',
         params: [],
@@ -21,7 +18,7 @@ new Vue({
                 postData[param.var_name] = param.value;
             });
             this.$http
-                .post("http://3dprint.styczen.site:5000/stl", postData, {responseType: 'arraybuffer'})
+                .post(BACKEND_URL + "/stl", postData, {responseType: 'arraybuffer'})
                 .then(response => {
                     var headers = response.headers;
                     var blob = new Blob([response.data],{type:headers['content-type']});
@@ -39,7 +36,7 @@ new Vue({
                 postData[param.var_name] = param.value;
             });
             this.$http
-                .post("http://3dprint.styczen.site:5000/render", postData, {responseType: 'blob'})
+                .post(BACKEND_URL + "/render", postData, {responseType: 'blob'})
                 .then(response => {
                     var headers = response.headers;
                     var blob = new Blob([response.data],{type:'image/png'});
@@ -50,7 +47,7 @@ new Vue({
                 });
         },
         sendScriptRequest(script) {
-            this.$http.get('http://3dprint.styczen.site:5000/script/' + script)
+            this.$http.get(BACKEND_URL + "/script/" + script)
             .then(res => {
                 this.params = res.body.params;
                 this.loaded_script = script;
@@ -59,10 +56,17 @@ new Vue({
         }
     },
     created: function() {
-        this.$http.get('http://3dprint.styczen.site:5000/script')
+        this.$http.get(BACKEND_URL + "/script")
             .then(res => {
                 this.scripts = res.body;
                 this.sendScriptRequest('keychain');
             })
+    },
+    computed: {
+        filtered_scripts() {
+            return this.scripts.filter( script => {
+                return script.script.toLowerCase().includes(this.script_filter.toLowerCase())
+            })
+        }
     }
 });
