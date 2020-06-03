@@ -42,8 +42,18 @@
                                     <option v-for="option in item.allowed" v-bind:value="option">{{ option }}</option>
                                 </select>
                             </template>
+                            <template v-else-if="item.type === 'category'">
+                                <select v-model="item.value" class="w3-input w3-border" @change="selected_category = item.value">
+                                    <option v-for="(value, key) in image_tree" v-bind:value="key">{{ key }}</option>
+                                </select>
+                            </template>
+                            <template v-else-if="item.type === 'image'">
+                                <select v-model="item.value" class="w3-input w3-border">
+                                    <option v-for="image in images" v-bind:value="image">{{ image }}</option>
+                                </select>
+                            </template>
                             <template v-else>
-                                <input v-if="item.type == 'string'" type="text" v-model="item.value" class="w3-input w3-border">
+                                <input v-if="item.type === 'string'" type="text" v-model="item.value" class="w3-input w3-border">
                                 <input v-else type="number" v-model="item.value" class="w3-input w3-border">
                             </template>
                             <p>{{ item.description }}</p>

@@ -1,4 +1,4 @@
-const HOST = "3dprint.styczen.site"
+const HOST = "127.0.0.1"
 const BACKEND_URL = "http://" + HOST + ":5000";
 
 new Vue({
@@ -9,7 +9,9 @@ new Vue({
         loaded_script: 'keychain',
         params: [],
         preview: "/img/preloader.gif",
-        preview_loading: true
+        preview_loading: true,
+        image_tree: null,
+        selected_category: null
     },
     methods: {
         sendStlRequest() {
@@ -51,22 +53,45 @@ new Vue({
             .then(res => {
                 this.params = res.body.params;
                 this.loaded_script = script;
+                var category_param = this.params.filter(e => {
+                    if(e.type === 'category') {
+                        return e;
+                    }
+                })
+                this.selected_category = category_param.value;
+                this.image_tree[this.selected_category];
                 this.sendPreviewRequest();
-            })
+            });
         }
     },
     created: function() {
-        this.$http.get(BACKEND_URL + "/script")
+        this.$http.get(BACKEND_URL + "/images")
+        .then(res => {
+            this.image_tree = res.body;
+            for (var k in this.image_tree) { 
+                this.selected_category = k; 
+                break; 
+            } 
+            this.$http.get(BACKEND_URL + "/script")
             .then(res => {
                 this.scripts = res.body;
                 this.sendScriptRequest('keychain');
-            })
+            });
+        });
+
+
     },
     computed: {
         filtered_scripts() {
             return this.scripts.filter( script => {
                 return script.script.toLowerCase().includes(this.script_filter.toLowerCase())
-            })
+            });
+        },
+        images() {
+            if(this.selected_category) {
+                return this.image_tree[this.selected_category];
+            }
+            else return [];
         }
     }
 });
