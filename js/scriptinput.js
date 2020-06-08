@@ -16,7 +16,7 @@ Vue.component('scriptinput', {
                         </select>
                     </template>
                     <template v-else-if="item.type === 'category'">
-                        <select v-model="item.value" class="w3-input w3-border" @change="script.selected_category = item.value">
+                        <select v-model="item.value" class="w3-input w3-border" @change="selectCategory(item.value)">
                             <option v-for="(value, key) in image_catalog" v-bind:value="key">{{ key }}</option>
                         </select>
                     </template>
@@ -38,6 +38,13 @@ Vue.component('scriptinput', {
         </div>
     </div>
     `,
+    methods: {
+        selectCategory(category) {
+            this.script.selected_category = category;
+            var image = this.script.params.find(e => e.type === 'image');
+            image.value = this.images[0];
+        }
+    },
     computed: {
         images() {
             return(this.image_catalog[this.script.selected_category]);
