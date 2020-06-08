@@ -19,7 +19,7 @@ main {
 {
     display: flex;
     flex-wrap: wrap;
-    max-height: 10vh;
+    max-height: 17vh;
     overflow-y: auto;
 }
 

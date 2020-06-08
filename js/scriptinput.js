@@ -15,14 +15,13 @@ Vue.component('scriptinput', {
                             <option v-for="option in item.allowed" v-bind:value="option">{{ option }}</option>
                         </select>
                     </template>
-                    <template v-else-if="item.type === 'category'">
-                        <select v-model="item.value" class="w3-input w3-border" @change="selectCategory(item.value)">
-                            <option v-for="(value, key) in image_catalog" v-bind:value="key">{{ key }}</option>
-                        </select>
-                    </template>
                     <template v-else-if="item.type === 'image'">
+                        <select class="w3-input w3-border" @change="selectCategory(item, $event)">
+                            <option v-for="(value, key) in image_catalog" v-bind:value="key" :selected="key === categoryFromPath(item)">{{ key }}</option>
+                        </select>
+                        <input v-model="filter" class="w3-input w3-border" placeholder="Search...">
                         <div class="grid-images">
-                            <i v-for="image in images" class="w3-hover-theme" :class="iconClass(image, item.value)" @click="selectImage(item, image)"></i>
+                            <i v-for="image in images(item)" class="w3-hover-theme" :class="iconClass(item, image)" @click="selectImage(item, image)"></i>
                         </div>
                     </template>
                     <template v-else>
@@ -38,36 +37,50 @@ Vue.component('scriptinput', {
         </div>
     </div>
     `,
+    data: function() {
+        return {
+            filter: ''
+        }
+    },
     methods: {
-        selectCategory(category) {
-            this.script.selected_category = category;
-            var image = this.script.params.find(e => e.type === 'image');
-            image.value = this.images[0];
+        selectCategory(parameter, event) {
+            var path = parameter.value.split('/');
+            path[0] = event.target.value;
+            parameter.value = path.join('/');
         },
         selectImage(parameter, image) {
-            parameter.value = image;
+            var path = parameter.value.split('/');
+            path[1] = image;
+            parameter.value = path.join('/');
             this.$emit('changed');
         },
-        getCategory() {
+        categoryFromPath(parameter) {
+            return parameter.value.split('/')[0];
+        },
+        imageFromPath(parameter) {
+            return parameter.value.split('/')[1];
+        },
+        categoryClass(category) {
             return {
                 'solid': 'fas',
                 'regular': 'far',
                 'brands': 'fab'
-            }[this.script.selected_category];
+            }[category];
         },
-        iconClass(image, value) {
+        iconClass(parameter, image) {
             var classes = [];
-            classes.push(this.getCategory());
+            var category = this.categoryFromPath(parameter);
+            classes.push(this.categoryClass(category));
             classes.push('fa-' + image);
-            if(value === image) {
+            if(this.imageFromPath(parameter) === image) {
                 classes.push('w3-theme');
             }
             return classes;
-        }
-    },
-    computed: {
-        images() {
-            return(this.image_catalog[this.script.selected_category]);
+        },
+        images(parameter) {
+            return this.image_catalog[this.categoryFromPath(parameter)].filter( image => {
+                return image.toLowerCase().includes(this.filter.toLowerCase())
+            });
         }
     }
 });

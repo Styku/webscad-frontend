@@ -8,8 +8,6 @@ export class Script {
         this.id = id;
         this.preview_loading = true;
         this.$http = http;
-        var category = this.params.find(e => e.type === 'category');
-        this.selected_category = category ? category.value : null;
     }
 
     postData() {
