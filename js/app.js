@@ -28,8 +28,8 @@ new Vue({
     created: function() {
         this.$http.get(BACKEND_URL + "/images")
         .then(res => {
-            this.image_catalog = res.body;
-
+            this.image_categories = res.body.categories;
+            this.image_catalog = res.body.images;
         });
         this.$http.get(BACKEND_URL + "/script")
         .then(res => {

@@ -1,5 +1,5 @@
 Vue.component('scriptinput', {
-    props: ['script', 'image_catalog'],
+    props: ['script', 'image_catalog', 'image_categories'],
     template: `
     <div v-if="script">
         <div class="title">
@@ -16,12 +16,9 @@ Vue.component('scriptinput', {
                         </select>
                     </template>
                     <template v-else-if="item.type === 'image'">
-                        <select class="w3-input w3-border" @change="selectCategory(item, $event)">
-                            <option v-for="(value, key) in image_catalog" v-bind:value="key" :selected="key === categoryFromPath(item)">{{ key }}</option>
-                        </select>
                         <input v-model="filter" class="w3-input w3-border" placeholder="Search...">
                         <div class="grid-images">
-                            <i v-for="image in images(item)" class="w3-hover-theme" :class="iconClass(item, image)" @click="selectImage(item, image)"></i>
+                            <i v-for="image in images" class="w3-hover-theme" :class="iconClass(item, image)" @click="selectImage(item, image)"></i>
                         </div>
                     </template>
                     <template v-else>
@@ -43,22 +40,15 @@ Vue.component('scriptinput', {
         }
     },
     methods: {
-        selectCategory(parameter, event) {
-            var path = parameter.value.split('/');
-            path[0] = event.target.value;
-            parameter.value = path.join('/');
-        },
         selectImage(parameter, image) {
-            var path = parameter.value.split('/');
-            path[1] = image;
-            parameter.value = path.join('/');
+            parameter.value = image;
             this.$emit('changed');
         },
         categoryFromPath(parameter) {
-            return parameter.value.split('/')[0];
+            return parameter.split('/')[0];
         },
         imageFromPath(parameter) {
-            return parameter.value.split('/')[1];
+            return parameter.split('/')[1];
         },
         categoryClass(category) {
             return {
@@ -69,16 +59,19 @@ Vue.component('scriptinput', {
         },
         iconClass(parameter, image) {
             var classes = [];
-            var category = this.categoryFromPath(parameter);
+            var category = this.categoryFromPath(image);
             classes.push(this.categoryClass(category));
-            classes.push('fa-' + image);
-            if(this.imageFromPath(parameter) === image) {
+            classes.push('fa-' + this.imageFromPath(image));
+            if(this.imageFromPath(parameter.value) === this.imageFromPath(image)) {
                 classes.push('w3-theme');
             }
             return classes;
-        },
-        images(parameter) {
-            return this.image_catalog[this.categoryFromPath(parameter)].filter( image => {
+        }
+    },
+    computed:
+    {
+        images() {
+            return this.image_catalog.filter( image => {
                 return image.toLowerCase().includes(this.filter.toLowerCase())
             });
         }
