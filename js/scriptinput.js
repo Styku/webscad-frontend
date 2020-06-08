@@ -21,9 +21,9 @@ Vue.component('scriptinput', {
                         </select>
                     </template>
                     <template v-else-if="item.type === 'image'">
-                        <select v-model="item.value" class="w3-input w3-border">
-                            <option v-for="image in images" v-bind:value="image">{{ image }}</option>
-                        </select>
+                        <div class="grid-images">
+                            <i v-for="image in images" class="w3-hover-theme" :class="iconClass(image, item.value)" @click="selectImage(item, image)"></i>
+                        </div>
                     </template>
                     <template v-else>
                         <input v-if="item.type === 'string'" type="text" v-model="item.value" class="w3-input w3-border">
@@ -43,6 +43,26 @@ Vue.component('scriptinput', {
             this.script.selected_category = category;
             var image = this.script.params.find(e => e.type === 'image');
             image.value = this.images[0];
+        },
+        selectImage(parameter, image) {
+            parameter.value = image;
+            this.$emit('changed');
+        },
+        getCategory() {
+            return {
+                'solid': 'fas',
+                'regular': 'far',
+                'brands': 'fab'
+            }[this.script.selected_category];
+        },
+        iconClass(image, value) {
+            var classes = [];
+            classes.push(this.getCategory());
+            classes.push('fa-' + image);
+            if(value === image) {
+                classes.push('w3-theme');
+            }
+            return classes;
         }
     },
     computed: {

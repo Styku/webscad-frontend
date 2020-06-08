@@ -6,6 +6,8 @@
     
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css">
+    <link href="/css/all.css" rel="stylesheet"> <!--load all styles -->
+
     <link rel="stylesheet" href="style.css">    
 </head>
 <body>
@@ -22,7 +24,7 @@
                     <button @click.prevent="getPreview(script)" class="w3-button w3-blue">Preview</button>
                     <button @click.prevent="getStl(script)" class="w3-button w3-green">Render</button>
                 </menu>
-                <ScriptInput v-bind:script="script" v-bind:image_catalog="image_catalog"></ScriptParam>
+                <ScriptInput v-bind:script="script" v-bind:image_catalog="image_catalog" @changed="getPreview(script)"></ScriptParam>
             </div>
         </div>
     </main>
