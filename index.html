@@ -6,37 +6,28 @@
     
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css">
-    <link rel="stylesheet" href="style.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1/dist/vue-resource.js"></script>
-    
+    <link rel="stylesheet" href="style.css">    
 </head>
 <body>
     <main id="app">
         <div class="grid-main">
             <div class="left-panel">
                 <menu class="w3-theme-d4">
-                    <input v-model="script_filter" class="w3-input w3-border">
+                    <input v-model="script_filter" class="w3-input w3-border" placeholder="Search...">
                 </menu>
-                <ScriptList v-bind:scripts="filtered_scripts" v-bind:selected_script="script"></ScriptList>
+                <ScriptList v-bind:scripts="filtered_scripts" v-bind:selected_script="script" @selected="loadScript($event)"></ScriptList>
             </div>
             <div>
                 <menu class="w3-theme-d4">
                     <button @click.prevent="getPreview(script)" class="w3-button w3-blue">Preview</button>
                     <button @click.prevent="getStl(script)" class="w3-button w3-green">Render</button>
                 </menu>
-                <div class="grid-inputs" v-if="script">
-                    <div>
-                        <ScriptParam v-for="item in script.params" v-bind:item="item"></ScriptParam>
-                    </div>
-                    <div v-bind:class="{'preview-container-loading': script.preview_loading, 'preview-container': !script.preview_loading}">
-                        <img v-bind:src="script.preview" v-if="!script.preview_loading"> 
-                    </div>
-                </div>
+                <ScriptParam v-bind:script="script" v-bind:image_catalog="image_catalog"></ScriptParam>
             </div>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1/dist/vue-resource.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
