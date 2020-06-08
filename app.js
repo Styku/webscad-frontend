@@ -9,12 +9,8 @@ class Script {
         this.id = id;
         this.preview_loading = true;
         this.$http = http;
-        var category = this.params.filter(e => {
-            if(e.type === 'category') {
-                return e;
-            }
-        });
-        this.selected_category = category ? category.value : null;
+        var category = this.params.find(e => e.type === 'category');
+        this.selected_category = category.value ? category.value : null;
     }
 
     postData() {
@@ -64,18 +60,13 @@ Vue.component('scriptlist', {
                 <img v-bind:src="item.image" class="thumbnail"> 
             </div>
         </div>
-    `,
-    methods: {
-        select(script) {
-            ;
-        }
-    }
+    `
 });
 
 Vue.component('scriptparam', {
     props: ['script', 'image_catalog'],
     template: `
-    <div>
+    <div v-if="script">
         <div class="title">
             <h2>{{ script.name}}</h2>
             <p>{{ script.description }}</p>
@@ -96,7 +87,7 @@ Vue.component('scriptparam', {
                     </template>
                     <template v-else-if="item.type === 'image'">
                         <select v-model="item.value" class="w3-input w3-border">
-                            <option v-for="image in image_catalog[script.selected_category]" v-bind:value="image">{{ image }}</option>
+                            <option v-for="image in images" v-bind:value="image">{{ image }}</option>
                         </select>
                     </template>
                     <template v-else>
@@ -111,7 +102,12 @@ Vue.component('scriptparam', {
             </div>
         </div>
     </div>
-    `
+    `,
+    computed: {
+        images() {
+            return(this.image_catalog[this.script.selected_category]);
+        }
+    }
 });
 
 new Vue({
