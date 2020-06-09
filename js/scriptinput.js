@@ -1,5 +1,7 @@
+import { FontawesomeImage } from './script.js'
+
 Vue.component('scriptinput', {
-    props: ['script', 'image_catalog', 'image_categories'],
+    props: ['script', 'image_catalog'],
     template: `
     <div v-if="script">
         <div class="title">
@@ -44,12 +46,6 @@ Vue.component('scriptinput', {
             parameter.value = image;
             this.$emit('changed');
         },
-        categoryFromPath(parameter) {
-            return parameter.split('/')[0];
-        },
-        imageFromPath(parameter) {
-            return parameter.split('/')[1];
-        },
         categoryClass(category) {
             return {
                 'solid': 'fas',
@@ -59,10 +55,9 @@ Vue.component('scriptinput', {
         },
         iconClass(parameter, image) {
             var classes = [];
-            var category = this.categoryFromPath(image);
-            classes.push(this.categoryClass(category));
-            classes.push('fa-' + this.imageFromPath(image));
-            if(this.imageFromPath(parameter.value) === this.imageFromPath(image)) {
+            classes.push(image.cssClass);
+            classes.push('fa-' + image.name);
+            if(parameter.value.name === image.name) {
                 classes.push('w3-theme');
             }
             return classes;
@@ -72,7 +67,7 @@ Vue.component('scriptinput', {
     {
         images() {
             return this.image_catalog.filter( image => {
-                return image.toLowerCase().includes(this.filter.toLowerCase())
+                return image.path.toLowerCase().includes(this.filter.toLowerCase())
             });
         }
     }

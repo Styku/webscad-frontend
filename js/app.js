@@ -1,4 +1,4 @@
-import { Script } from './script.js';
+import { Script, FontawesomeImage } from './script.js';
 import { BACKEND_URL } from './host.js'
 
 new Vue({
@@ -28,13 +28,12 @@ new Vue({
     created: function() {
         this.$http.get(BACKEND_URL + "/images")
         .then(res => {
-            this.image_categories = res.body.categories;
-            this.image_catalog = res.body.images;
+            this.image_catalog = res.body.images.map(x => new FontawesomeImage(x));
         });
         this.$http.get(BACKEND_URL + "/script")
         .then(res => {
             this.scripts = res.body;
-            this.loadScript('keychain');
+            this.loadScript(this.scripts[0].script);
         });
     },
     computed: {

@@ -24,7 +24,7 @@
                     <button @click.prevent="getPreview(script)" class="w3-button w3-blue">Preview</button>
                     <button @click.prevent="getStl(script)" class="w3-button w3-green">Render</button>
                 </menu>
-                <ScriptInput v-bind:script="script" v-bind:image_catalog="image_catalog" v-bind:image_categories="image_categories" @changed="getPreview(script)"></ScriptParam>
+                <ScriptInput v-bind:script="script" v-bind:image_catalog="image_catalog" @changed="getPreview(script)"></ScriptParam>
             </div>
         </div>
     </main>
