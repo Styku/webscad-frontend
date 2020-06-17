@@ -1,39 +1,31 @@
 <template>
   <main id="app">
     <div class="grid-main">
-      <div class="left-panel">
-        <menu class="w3-theme-d4">
-          <input v-model="script_filter" class="w3-input w3-border" placeholder="Search..." />
-        </menu>
-        <script-list
-          v-bind:scripts="filtered_scripts"
-          v-bind:selected_script="script"
-          @selected="loadScript($event)"
-        ></script-list>
-      </div>
-      <script-view v-bind:script="script" v-bind:image_catalog="image_catalog"></script-view>
+      <scripts-panel
+        @selected="loadScript($event)"
+        v-bind:scripts="scripts"
+        v-bind:selected="script"
+      ></scripts-panel>
+      <script-view v-bind:script="script"></script-view>
     </div>
   </main>
 </template>
 
 <script>
 import ScriptView from "./components/ScriptView.vue";
-import ScriptList from "./components/scriptlist.vue";
-import { Script, FontawesomeImage } from "./script";
+import ScriptsPanel from "./components/ScriptsPanel.vue";
+import { Script } from "./script";
 import { BACKEND_URL } from "./host";
 
 export default {
   name: "App",
   components: {
     ScriptView,
-    ScriptList
+    ScriptsPanel
   },
   data() {
     return {
-      script_filter: "",
       scripts: [],
-      image_catalog: null,
-      selected_category: null,
       script: null
     };
   },
@@ -46,22 +38,10 @@ export default {
     }
   },
   created: function() {
-    this.$http.get(BACKEND_URL + "/images").then(res => {
-      this.image_catalog = res.body.images.map(x => new FontawesomeImage(x));
-    });
     this.$http.get(BACKEND_URL + "/script").then(res => {
       this.scripts = res.body;
       this.loadScript(this.scripts[0].script);
     });
-  },
-  computed: {
-    filtered_scripts() {
-      return this.scripts.filter(script => {
-        return script.script
-          .toLowerCase()
-          .includes(this.script_filter.toLowerCase());
-      });
-    }
   }
 };
 </script>

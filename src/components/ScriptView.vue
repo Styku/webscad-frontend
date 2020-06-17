@@ -6,21 +6,20 @@
     </menu>
     <script-input
       v-bind:script="script"
-      v-bind:image_catalog="image_catalog"
       @changed="getPreview(script)"
     ></script-input>
   </div>
 </template>
 
 <script>
-import ScriptInput from "./scriptinput.vue";
+import ScriptInput from "./ScriptInput.vue";
 
 export default {
   name: "ScriptView",
   components: {
     ScriptInput
   },
-  props: ['script', 'image_catalog'],
+  props: ['script'],
   methods: {
     getStl(script) {
       script.getStl();
