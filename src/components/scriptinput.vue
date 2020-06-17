@@ -1,8 +1,5 @@
-import { FontawesomeImage } from './script.js'
 
-Vue.component('ScriptInput', {
-    props: ['script', 'image_catalog'],
-    template: `
+<template>
     <div v-if="script">
         <div class="title">
             <h2>{{ script.name}}</h2>
@@ -10,17 +7,17 @@ Vue.component('ScriptInput', {
         </div>
         <div class="grid-inputs">
             <div>
-                <div v-for="item in script.params" v-bind:item="item">                
+                <div v-for="item in script.params" v-bind:item="item" v-bind:key="item.var_name">                
                     <label class="w3-text-blue">{{ item.name }}</label>
                     <template v-if="item.allowed">
                         <select v-model="item.value" class="w3-input w3-border">
-                            <option v-for="option in item.allowed" v-bind:value="option">{{ option }}</option>
+                            <option v-for="option in item.allowed" v-bind:value="option" v-bind:key="option">{{ option }}</option>
                         </select>
                     </template>
                     <template v-else-if="item.type === 'image'">
                         <input v-model="filter" class="w3-input w3-border" placeholder="Search...">
                         <div class="grid-images">
-                            <i v-for="image in images" class="w3-hover-theme" :class="iconClass(item, image)" @click="selectImage(item, image)"></i>
+                            <i v-for="image in images" class="w3-hover-theme" :class="iconClass(item, image)" @click="selectImage(item, image)" v-bind:key="image"></i>
                         </div>
                     </template>
                     <template v-else>
@@ -35,8 +32,13 @@ Vue.component('ScriptInput', {
             </div>
         </div>
     </div>
-    `,
-    data: function() {
+</template>
+
+<script>
+export default {
+    name: 'ScriptInput', 
+    props: ['script', 'image_catalog'],
+    data() {
         return {
             filter: ''
         }
@@ -71,4 +73,5 @@ Vue.component('ScriptInput', {
             });
         }
     }
-});
+};
+</script>
