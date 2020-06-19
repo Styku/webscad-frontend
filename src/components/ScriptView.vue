@@ -6,6 +6,12 @@
     </menu>
     <tab-view>
       <tab title="Input">
+        <div class="title" v-if="script">
+          <h2>{{ script.name}}</h2>
+          <p>{{ script.description }}</p>
+          <p v-if="script.author"><b>Author: </b>{{ script.author }}</p>
+          <p v-if="script.url"><b>Link: </b><a :href="script.url" target="_blank">{{ script.url }}</a></p>
+        </div>
         <script-input v-bind:script="script" @changed="getPreview()"></script-input>
       </tab>
       <tab title="Source">

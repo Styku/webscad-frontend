@@ -20,6 +20,9 @@ export class Script {
     });
     this.name = script.name;
     this.description = script.description;
+    this.author = script.author;
+    this.url = script.url;
+    console.log('author ' + this.author);
     this.id = id;
     this.preview_loading = true;
     this.$http = http;

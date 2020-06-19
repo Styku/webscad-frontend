@@ -1,9 +1,5 @@
 <template>
-  <div v-if="script">
-    <div class="title">
-      <h2>{{ script.name}}</h2>
-      <p>{{ script.description }}</p>
-    </div>
+  <div>
     <div class="grid-inputs">
       <div>
         <div v-for="item in script.params" v-bind:item="item" v-bind:key="item.var_name">
