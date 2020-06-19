@@ -47,7 +47,6 @@
 
 <script>
 import ImageSelect from "./ImageSelect.vue";
-import { BACKEND_URL } from "../host";
 import { FontawesomeImage } from "../script";
 
 export default {
@@ -69,7 +68,7 @@ export default {
     }
   },
   created: function() {
-    this.$http.get(BACKEND_URL + "/images").then(res => {
+    this.$http.get(process.env.VUE_APP_API_URL + "/images").then(res => {
       this.image_catalog = res.body.images.map(x => new FontawesomeImage(x));
     });
   }

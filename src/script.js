@@ -1,5 +1,3 @@
-import { BACKEND_URL } from './host.js'
-
 export class FontawesomeImage {
     constructor(path) {
         this.path = path;
@@ -43,7 +41,7 @@ export class Script {
     getPreviev() {
         this.preview_loading = true;
         this.preview = "/img/preloader.gif";
-        this.$http.post(BACKEND_URL + "/out/png", this.postData(), {responseType: 'blob'})
+        this.$http.post(process.env.VUE_APP_API_URL + "/out/png", this.postData(), {responseType: 'blob'})
             .then(response => {
                 var blob = new Blob([response.data],{type:'image/png'});
                 var urlCreator = window.URL || window.webkitURL;
@@ -55,7 +53,7 @@ export class Script {
 
     getStl() {
         this.$http
-        .post(BACKEND_URL + "/out/stl", this.postData(), {responseType: 'arraybuffer'})
+        .post(process.env.VUE_APP_API_URL + "/out/stl", this.postData(), {responseType: 'arraybuffer'})
         .then(response => {
             var headers = response.headers;
             var blob = new Blob([response.data],{type:headers['content-type']});

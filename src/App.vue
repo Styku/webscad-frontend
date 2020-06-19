@@ -15,7 +15,6 @@
 import ScriptView from "./components/ScriptView.vue";
 import ScriptsPanel from "./components/ScriptsPanel.vue";
 import { Script } from "./script";
-import { BACKEND_URL } from "./host";
 
 export default {
   name: "App",
@@ -31,14 +30,14 @@ export default {
   },
   methods: {
     loadScript(script_id) {
-      this.$http.get(BACKEND_URL + "/script/" + script_id).then(res => {
+      this.$http.get(process.env.VUE_APP_API_URL + "/script/" + script_id).then(res => {
         this.script = new Script(res.body, script_id, this.$http);
         this.script.getPreviev(this.$http);
       });
     }
   },
   created: function() {
-    this.$http.get(BACKEND_URL + "/script").then(res => {
+    this.$http.get(process.env.VUE_APP_API_URL + "/script").then(res => {
       this.scripts = res.body;
       this.loadScript(this.scripts[0].script);
     });
