@@ -48,14 +48,14 @@ export default {
 main {
   margin: 0px;
   padding: 0px;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 .grid-main {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 </style>

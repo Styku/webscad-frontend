@@ -4,17 +4,30 @@
       <button @click.prevent="getPreview(script)" class="w3-button w3-blue">Preview</button>
       <button @click.prevent="getStl()" class="w3-button w3-green">Render</button>
     </menu>
-    <script-input v-bind:script="script" @changed="getPreview()"></script-input>
+    <tab-view>
+      <tab title="Input">
+        <script-input v-bind:script="script" @changed="getPreview()"></script-input>
+      </tab>
+      <tab title="Source">
+        <source-code v-if="script">{{script.source}}</source-code>
+      </tab>
+    </tab-view>
   </div>
 </template>
 
 <script>
 import ScriptInput from "./ScriptInput.vue";
+import TabView from "./TabView.vue";
+import Tab from "./Tab.vue";
+import SourceCode from "./SourceCode.vue";
 
 export default {
   name: "ScriptView",
   components: {
-    ScriptInput
+    ScriptInput,
+    TabView,
+    Tab,
+    SourceCode
   },
   props: ["script"],
   methods: {

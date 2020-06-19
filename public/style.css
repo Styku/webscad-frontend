@@ -1,6 +1,6 @@
 .grid-inputs
 {
-    height: calc(100% - 60px);
+    max-height: calc(100vh - 245px);
     padding: 20px;
     display: grid;
     grid-template-columns: 1fr 2fr;
