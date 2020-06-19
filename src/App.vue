@@ -32,7 +32,6 @@ export default {
     loadScript(script_id) {
       this.$http.get(process.env.VUE_APP_API_URL + "/script/" + script_id).then(res => {
         this.script = new Script(res.body, script_id, this.$http);
-        this.script.getPreviev(this.$http);
       });
     }
   },

@@ -1,5 +1,6 @@
 # TO-DO
 
+ - [] create separate deployment script
  - [] display source of script being used
  - [] add OpenSCAD syntax highlighting 
  - [] display metadata: author, thingiverse url, etc.
