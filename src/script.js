@@ -43,7 +43,7 @@ export class Script {
     getPreviev() {
         this.preview_loading = true;
         this.preview = "/img/preloader.gif";
-        this.$http.post(BACKEND_URL + "/render", this.postData(), {responseType: 'blob'})
+        this.$http.post(BACKEND_URL + "/out/png", this.postData(), {responseType: 'blob'})
             .then(response => {
                 var blob = new Blob([response.data],{type:'image/png'});
                 var urlCreator = window.URL || window.webkitURL;
@@ -55,14 +55,15 @@ export class Script {
 
     getStl() {
         this.$http
-        .post(BACKEND_URL + "/stl", this.postData(), {responseType: 'arraybuffer'})
+        .post(BACKEND_URL + "/out/stl", this.postData(), {responseType: 'arraybuffer'})
         .then(response => {
             var headers = response.headers;
             var blob = new Blob([response.data],{type:headers['content-type']});
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = "keychain.stl";
+            link.download = "output.stl";
             link.click();
+            window.URL.revokeObjectURL(link.href);
         });
     }
 }
