@@ -7,7 +7,7 @@
       v-bind:key="item.script"
     >
       <div v-bind:class="getTileStyling(item.script)">
-        <h5>{{ item.script }}</h5>
+        <h5>{{ item.name }}</h5>
       </div>
       <img v-bind:src="item.image" class="thumbnail" />
     </div>

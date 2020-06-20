@@ -6,5 +6,6 @@
  - [x] display metadata: author, thingiverse url, etc.
  - [] add a button for script download
  - [] add a feature for gcode request & download
- - [] enhance script tiles with searchable tags and proper script names
+ - [x] enhance script tiles with searchable tags and proper script names
+ - [] filter by tags
  - [] implement min-max limits for numerical values

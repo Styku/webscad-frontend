@@ -22,7 +22,6 @@ export class Script {
     this.description = script.description;
     this.author = script.author;
     this.url = script.url;
-    console.log('author ' + this.author);
     this.id = id;
     this.preview_loading = true;
     this.$http = http;
@@ -34,7 +33,6 @@ export class Script {
     this.params.forEach((param) => {
       if (param.type === "image") {
         postData[param.var_name] = param.value.path;
-        console.log(param.value.path);
       } else postData[param.var_name] = param.value;
     });
     return postData;

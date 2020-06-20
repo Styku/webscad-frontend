@@ -28,7 +28,7 @@ export default {
   computed: {
     filtered_scripts() {
       return this.scripts.filter(script => {
-        return script.script
+        return script.name
           .toLowerCase()
           .includes(this.script_filter.toLowerCase());
       });
