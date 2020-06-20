@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <div class="w3-bar w3-theme-d2">
+  <div class="tabview">
+    <div>
       <button
         class="w3-bar-item w3-button"
-        :class="{'w3-theme-d3': i === active}"
+        :class="{'w3-theme': i === active, 'w3-theme-l4':  i !== active}"
         @click="switchTab(i)"
         v-for="(tab, i) in tabs"
         :key="i"
       >{{ tab.title }}</button>
     </div>
-    <div>
+    <div class="w3-border-theme">
       <slot></slot>
     </div>
   </div>
@@ -35,3 +35,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.tabview {
+  margin: 20px;
+}
+</style>

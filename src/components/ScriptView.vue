@@ -4,20 +4,28 @@
       <button @click.prevent="getPreview(script)" class="w3-button w3-blue">Preview</button>
       <button @click.prevent="getStl()" class="w3-button w3-green">Render</button>
     </menu>
-    <tab-view>
-      <tab title="Input">
-        <div class="title" v-if="script">
-          <h2>{{ script.name}}</h2>
-          <p>{{ script.description }}</p>
-          <p v-if="script.author"><b>Author: </b>{{ script.author }}</p>
-          <p v-if="script.url"><b>Link: </b><a :href="script.url" target="_blank">{{ script.url }}</a></p>
-        </div>
-        <script-input v-bind:script="script" @changed="getPreview()"></script-input>
-      </tab>
-      <tab title="Source">
-        <source-code v-if="script">{{script.source}}</source-code>
-      </tab>
-    </tab-view>
+    <div class="script-view">
+      <div class="title" v-if="script">
+        <h2>{{ script.name}}</h2>
+        <p>{{ script.description }}</p>
+        <p v-if="script.author">
+          <b>Author:</b>
+          {{ script.author }}
+        </p>
+        <p v-if="script.url">
+          <b>Link:</b>
+          <a :href="script.url" target="_blank">{{ script.url }}</a>
+        </p>
+      </div>
+      <tab-view>
+        <tab title="Input">
+          <script-input v-if="script" v-bind:script="script" @changed="getPreview()"></script-input>
+        </tab>
+        <tab title="Source">
+          <source-code v-if="script" :source="script.source"></source-code>
+        </tab>
+      </tab-view>
+    </div>
   </div>
 </template>
 
@@ -79,3 +87,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.script-view {
+  max-height: calc(100vh - 60px);
+  overflow: auto;
+}
+</style>

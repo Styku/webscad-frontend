@@ -1,5 +1,5 @@
 <template>
-  <div class="grid-scripts w3-theme-l4" v-if="selected_script">
+  <div class="grid-scripts w3-theme-l4 script-list" v-if="selected_script">
     <div
       v-for="item in scripts"
       @click.prevent="$emit('selected', item.script)"
@@ -29,3 +29,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.script-list {
+  overflow-y: scroll;
+  height: calc(100vh - 60px);
+}
+</style>

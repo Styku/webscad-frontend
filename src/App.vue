@@ -45,11 +45,17 @@ export default {
 </script>
 
 <style>
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
 main {
   margin: 0px;
   padding: 0px;
   width: 100vw;
   height: 100vh;
+  box-sizing: border-box;
 }
 
 .grid-main {

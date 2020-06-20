@@ -1,5 +1,5 @@
 <template>
-  <div :style="[isActive ? {'display': 'block'} : {'display': 'none'}]" class="tab-box">
+  <div :style="[isActive ? {'display': 'block'} : {'display': 'none'}]" class="tab-box w3-border-theme">
     <slot></slot>
   </div>
 </template>
@@ -16,6 +16,6 @@ export default {
 
 <style scoped>
 .tab-box {
-  overflow-y: scroll;
+  border: 2px solid;
 }
 </style>
