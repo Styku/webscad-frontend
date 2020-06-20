@@ -2,7 +2,7 @@
   <div>
     <div class="grid-inputs">
       <div>
-        <div v-for="item in script.params" v-bind:item="item" v-bind:key="item.var_name">
+        <div v-for="item in script.params" v-bind:item="item" v-bind:key="item.var_name" class="input-group">
           <label class="w3-text-blue">{{ item.name }}</label>
           <template v-if="item.allowed">
             <select v-model="item.value" class="w3-input w3-border">
@@ -29,7 +29,6 @@
             />
             <input v-else type="number" v-model="item.value" class="w3-input w3-border" />
           </template>
-          <p>{{ item.description }}</p>
         </div>
       </div>
       <div
@@ -70,3 +69,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.input-group {
+  margin: 10px 0px;
+}
+</style>

@@ -13,7 +13,7 @@
           {{ script.author }}
         </p>
         <p v-if="script.url">
-          <b>Link:</b>
+          <b>Link: </b>
           <a :href="script.url" target="_blank">{{ script.url }}</a>
         </p>
       </div>
