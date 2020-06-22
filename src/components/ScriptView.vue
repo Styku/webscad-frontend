@@ -1,8 +1,9 @@
 <template>
   <div>
     <menu class="w3-theme-d4">
-      <button @click.prevent="getPreview(script)" class="w3-button w3-blue">Preview</button>
-      <button @click.prevent="getStl()" class="w3-button w3-green">Render</button>
+      <button @click.prevent="getSource()" class="w3-button w3-blue"><i class="fas fa-download"></i> Source</button>
+      <button @click.prevent="getStl()" class="w3-button w3-blue"><i class="fas fa-download"></i> STL</button>
+      <button @click.prevent="getPreview(script)" class="w3-button w3-green"><i class="fas fa-sync"></i> Preview</button>
     </menu>
     <div class="script-view">
       <div class="title" v-if="script">
@@ -64,6 +65,12 @@ export default {
           window.URL.revokeObjectURL(link.href);
         });
     },
+    getSource() {
+      var link = document.createElement("a");
+      link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.script.source);
+      link.download = this.script.name + '.scad';
+      link.click();
+    },
     getPreview() {
       this.script.preview_loading = true;
       this.script.preview = "/img/preloader.gif";
@@ -92,5 +99,8 @@ export default {
 .script-view {
   max-height: calc(100vh - 60px);
   overflow: auto;
+}
+menu > button {
+  margin-right: 5px;
 }
 </style>
